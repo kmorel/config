@@ -1,0 +1,18 @@
+; -*- ini-generic -*-
+;
+; To make this your git configuration, make two symbolic links.  Assuming
+; this configure file is located in ~/local/etc/config, these symbolic
+; links are created in your home directory:
+;
+;    ln -s ~/local/etc/config/gitconfig .gitconfig
+;    ln -s ~/local/etc/config/gitignore .gitignore
+;
+
+[user]
+	name = Kenneth Moreland
+	email = kmorel@sandia.gov
+[core]
+	excludesfile = ~/.gitignore
+[alias]
+	pullall = !git pull && git submodule update --init --recursive
+	prune-remotes = !git remote | xargs -n 1 git remote prune
