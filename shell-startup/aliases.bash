@@ -27,7 +27,7 @@ function svnstat() {
 alias e='gnuclient -q'
 
 function xt() {
-    xterm "$@" -sb -sl 1024 -rv -T xterm@`hostname` -e zsh &
+    xterm "$@" -sb -sl 1024 -rv -T xterm@`hostname` -e $SHELL &
 }
 
 # Get help about a cmake command.
