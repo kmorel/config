@@ -14,8 +14,8 @@ config_dir=$(dirname $0)
 export KMOREL_CONFIG_DIR=$(${config_dir}/bin/fullpath $config_dir)
 unset config_dir
 
-. $KMOREL_CONFIG_DIR/shell-startup/path-setup.sh
 . $KMOREL_CONFIG_DIR/shell-startup/basic-environment.sh
+. $KMOREL_CONFIG_DIR/shell-startup/path-setup.sh
 . $KMOREL_CONFIG_DIR/shell-startup/ls-setup.bash
 . $KMOREL_CONFIG_DIR/shell-startup/aliases.bash
 . $KMOREL_CONFIG_DIR/shell-startup/os-specific.bash

@@ -13,3 +13,7 @@ export LESS="-i -M"
 export CVS_RSH=/usr/bin/ssh
 
 stty erase '^?'
+
+quiet_which() {
+    which "$@" > /dev/null 2> /dev/null
+}

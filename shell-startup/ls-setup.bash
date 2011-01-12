@@ -7,17 +7,17 @@ LS_OPT="--color=auto -F"
 # Set up ls colors.
 DIR_COLORS=$KMOREL_CONFIG_DIR/shell-startup/DIR_COLORS
 
-if which dircolors > /dev/null
+if quiet_which dircolors
 then
     eval `dircolors -b $DIR_COLORS`
-elif which gdircolors > /dev/null
+elif quiet_which gdircolors
 then
     eval `gdircolors -b $DIR_COLORS`
 else
     LS_OPT="-F"
 fi
 
-if which gls > /dev/null
+if quiet_which gls
 then
     ls_command=gls
 else

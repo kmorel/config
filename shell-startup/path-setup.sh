@@ -50,7 +50,7 @@ add_before_system_path \
     /usr/local/bin
 
 # Make sure X programs are in path.
-if which xterm > /dev/null ; then
+if quiet_which xterm ; then
     :
 else
     add_after_system_path \
