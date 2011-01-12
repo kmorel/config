@@ -13,3 +13,59 @@ config_dir=$(dirname $0)
 # Absolute path to configure dir
 export KMOREL_CONFIG_DIR=$(${config_dir}/bin/fullpath $config_dir)
 unset config_dir
+
+. $KMOREL_CONFIG_DIR/shell-startup/path-setup.sh
+. $KMOREL_CONFIG_DIR/shell-startup/basic-environment.sh
+. $KMOREL_CONFIG_DIR/shell-startup/ls-setup.bash
+. $KMOREL_CONFIG_DIR/shell-startup/aliases.bash
+. $KMOREL_CONFIG_DIR/shell-startup/os-specific.bash
+. $KMOREL_CONFIG_DIR/shell-startup/developer-setup.bash
+
+export SHELL=/bin/zsh
+
+#Options
+unsetopt AUTO_CD
+unsetopt AUTO_PUSHD
+unsetopt PUSHD_SILENT
+unsetopt PUSHD_TO_HOME
+setopt NO_BG_NICE
+setopt NOTIFY
+
+#############################################################################
+# Set up key bindings.
+bindkey -v			# Vi-like editing
+bindkey "^A" beginning-of-line	# With some convienent emacs-like keys
+bindkey "^E" end-of-line
+bindkey "^R" history-incremental-search-backward
+bindkey "^S" history-incremental-search-forward
+bindkey "^D" delete-char-or-list
+
+#############################################################################
+# Load up colors.
+autoload colors zsh/terminfo
+if [[ "$terminfo[colors]" -ge 8 ]]; then
+    colors
+fi
+for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
+    eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
+    eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
+done
+PR_NO_COLOR="%{$terminfo[sgr0]%}"
+
+#############################################################################
+# Set up prompt.
+PROMPT="%m %?> "
+RPROMPT="${PR_RED}%~${PR_NO_COLOR}"
+
+#############################################################################
+# Set up completions
+autoload -U compinit
+if uname | fgrep CYGWIN > /dev/null ; then
+    compinit -u
+else
+    compinit
+fi
+
+# Some customized completions
+fpath=($KMOREL_CONFIG_DIR/zshfunc $fpath)
+autoload -U $KMOREL_CONFIG_DIR/zshfunc/_*(:t)
