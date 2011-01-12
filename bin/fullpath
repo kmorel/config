@@ -1,0 +1,25 @@
+#!/bin/sh
+
+in_path=$1
+
+if out_path=`readlink -f $in_path 2> /dev/null`
+then
+    echo $out_path
+    exit
+fi
+
+if out_path=`greadlink -f $in_path 2> /dev/null`
+then
+    echo $out_path
+    exit
+fi
+
+# Cannot find an appropriate utility to track down full path.  Do it manually.
+if echo $in_path | grep ^/ > /dev/null
+then
+    out_path=$in_path
+else
+    out_path=$PWD/$in_path
+fi
+
+echo $out_path
