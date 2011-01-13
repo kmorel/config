@@ -46,7 +46,7 @@ setup_symbolic_link() {
     source=$2
 
     if [ -f $target ] ; then
-	if [ -L $target -a $(readlink $target) = $source ] ; then
+	if [ -L $target -a "$(readlink $target)" = $source ] ; then
 	    # Link is already correct.
 	    :
 	else
