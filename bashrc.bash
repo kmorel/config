@@ -23,6 +23,17 @@ unset config_dir
 
 . $KMOREL_CONFIG_DIR/shell-startup/git-completion.bash
 
+#############################################################################
+# Set up key bindings.
+set -o vi                                       # Vi-like editing
+bind -m vi-insert '\C-a:beginning-of-line'      # With some emacs-like keys
+bind -m vi-insert '\C-e:end-of-line'
+bind -m vi-insert '\C-r:reverse-search-history'
+bind -m vi-insert '\C-s:forward-serach-history'
+bind -m vi-insert '\C-d:delete-char'
+
+#############################################################################
+# Set up prompt.
 bold=$(tput bold)
 red=$(tput setaf 1)
 cyan=$(tput setaf 6)
