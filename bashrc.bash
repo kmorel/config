@@ -20,3 +20,13 @@ unset config_dir
 . $KMOREL_CONFIG_DIR/shell-startup/aliases.bash
 . $KMOREL_CONFIG_DIR/shell-startup/os-specific.bash
 . $KMOREL_CONFIG_DIR/shell-startup/developer-setup.bash
+
+. $KMOREL_CONFIG_DIR/shell-startup/git-completion.bash
+
+bold=$(tput bold)
+red=$(tput setaf 1)
+cyan=$(tput setaf 6)
+reset=$(tput sgr0)
+PS1='\h:\[$bold$red\]\w\[$reset\]$(__git_ps1 ",\[$cyan\]%s\[$reset\]") $?> '
+
+alias where='which'
