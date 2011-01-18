@@ -12,7 +12,10 @@ export LESS="-i -M"
 
 export CVS_RSH=/usr/bin/ssh
 
-stty erase '^?'
+if [ -n "$PS1" ] ; then
+    # Executed only for interactive shells.
+    stty erase '^?'
+fi
 
 quiet_which() {
     which "$@" > /dev/null 2> /dev/null
