@@ -16,9 +16,9 @@ unset config_dir
 
 . $KMOREL_CONFIG_DIR/shell-startup/basic-environment.sh
 . $KMOREL_CONFIG_DIR/shell-startup/path-setup.sh
+. $KMOREL_CONFIG_DIR/shell-startup/os-specific.bash
 . $KMOREL_CONFIG_DIR/shell-startup/ls-setup.bash
 . $KMOREL_CONFIG_DIR/shell-startup/aliases.bash
-. $KMOREL_CONFIG_DIR/shell-startup/os-specific.bash
 . $KMOREL_CONFIG_DIR/shell-startup/developer-setup.bash
 
 export SHELL=/bin/zsh
