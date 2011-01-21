@@ -70,6 +70,7 @@ setup_symbolic_link() {
 
 setup_login_file ${HOME}/.bashrc ${KMOREL_CONFIG_DIR}/bashrc.bash
 setup_login_file ${HOME}/.zshrc ${KMOREL_CONFIG_DIR}/zshrc.zsh
+setup_login_file ${HOME}/.zshenv ${KMOREL_CONFIG_DIR}/zshenv.zsh
 
 setup_symbolic_link ${HOME}/.gitconfig ${KMOREL_CONFIG_DIR}/gitconfig
 setup_symbolic_link ${HOME}/.gitignore ${KMOREL_CONFIG_DIR}/gitignore
