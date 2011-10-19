@@ -7,6 +7,15 @@
 # can also be added to your .zshrc before or after the call.
 #
 
+# Relative path to configure dir (the directory this script is located).
+config_dir=$(dirname $0)
+
+# Absolute path to configure dir
+export KMOREL_CONFIG_DIR=$(${config_dir}/bin/fullpath $config_dir)
+unset config_dir
+
+. $KMOREL_CONFIG_DIR/shell-startup/ls-setup.bash
+
 #Options
 unsetopt AUTO_CD
 unsetopt AUTO_PUSHD

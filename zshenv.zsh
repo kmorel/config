@@ -10,15 +10,12 @@
 # Relative path to configure dir (the directory this script is located).
 config_dir=$(dirname $0)
 
-# Absolute path to configure dir
-export KMOREL_CONFIG_DIR=$(${config_dir}/bin/fullpath $config_dir)
-unset config_dir
+. $config_dir/shell-startup/basic-environment.sh
+. $config_dir/shell-startup/path-setup.sh
+. $config_dir/shell-startup/aliases.bash
+. $config_dir/shell-startup/os-specific.bash
+. $config_dir/shell-startup/developer-setup.bash
 
-. $KMOREL_CONFIG_DIR/shell-startup/basic-environment.sh
-. $KMOREL_CONFIG_DIR/shell-startup/path-setup.sh
-. $KMOREL_CONFIG_DIR/shell-startup/aliases.bash
-. $KMOREL_CONFIG_DIR/shell-startup/os-specific.bash
-. $KMOREL_CONFIG_DIR/shell-startup/ls-setup.bash
-. $KMOREL_CONFIG_DIR/shell-startup/developer-setup.bash
+unset config_dir
 
 export SHELL=/bin/zsh
