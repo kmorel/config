@@ -21,6 +21,12 @@ unset config_dir
 . $KMOREL_CONFIG_DIR/shell-startup/ls-setup.bash
 . $KMOREL_CONFIG_DIR/shell-startup/developer-setup.bash
 
+# If this is not a login shell, we don't need any more setup.
+if shopt -q login_shell
+then :
+else return
+fi
+
 . $KMOREL_CONFIG_DIR/shell-startup/git-completion.bash
 
 #############################################################################
