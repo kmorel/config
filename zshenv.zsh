@@ -10,11 +10,11 @@
 # Relative path to configure dir (the directory this script is located).
 config_dir=$(dirname $0)
 
-. $config_dir/shell-startup/basic-environment.sh
-. $config_dir/shell-startup/path-setup.sh
-. $config_dir/shell-startup/aliases.bash
-. $config_dir/shell-startup/os-specific.bash
-. $config_dir/shell-startup/developer-setup.bash
+. "$config_dir/shell-startup/basic-environment.sh"
+. "$config_dir/shell-startup/path-setup.sh"
+. "$config_dir/shell-startup/aliases.bash"
+. "$config_dir/shell-startup/os-specific.bash"
+. "$config_dir/shell-startup/developer-setup.bash"
 
 unset config_dir
 

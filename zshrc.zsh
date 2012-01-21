@@ -11,10 +11,11 @@
 config_dir=$(dirname $0)
 
 # Absolute path to configure dir
-export KMOREL_CONFIG_DIR=$(${config_dir}/bin/fullpath $config_dir)
+KMOREL_CONFIG_DIR=$("${config_dir}/bin/fullpath" "$config_dir")
+export KMOREL_CONFIG_DIR
 unset config_dir
 
-. $KMOREL_CONFIG_DIR/shell-startup/ls-setup.bash
+. "$KMOREL_CONFIG_DIR/shell-startup/ls-setup.bash"
 
 #Options
 unsetopt AUTO_CD
