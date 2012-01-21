@@ -8,18 +8,18 @@
 #
 
 # Relative path to configure dir (the directory this script is located).
-config_dir=$(dirname $BASH_SOURCE)
+config_dir=$(dirname "$BASH_SOURCE")
 
 # Absolute path to configure dir
-export KMOREL_CONFIG_DIR=$(${config_dir}/bin/fullpath $config_dir)
+export KMOREL_CONFIG_DIR=$("${config_dir}/bin/fullpath" "$config_dir")
 unset config_dir
 
-. $KMOREL_CONFIG_DIR/shell-startup/basic-environment.sh
-. $KMOREL_CONFIG_DIR/shell-startup/path-setup.sh
-. $KMOREL_CONFIG_DIR/shell-startup/aliases.bash
-. $KMOREL_CONFIG_DIR/shell-startup/os-specific.bash
-. $KMOREL_CONFIG_DIR/shell-startup/ls-setup.bash
-. $KMOREL_CONFIG_DIR/shell-startup/developer-setup.bash
+. "$KMOREL_CONFIG_DIR/shell-startup/basic-environment.sh"
+. "$KMOREL_CONFIG_DIR/shell-startup/path-setup.sh"
+. "$KMOREL_CONFIG_DIR/shell-startup/aliases.bash"
+. "$KMOREL_CONFIG_DIR/shell-startup/os-specific.bash"
+. "$KMOREL_CONFIG_DIR/shell-startup/ls-setup.bash"
+. "$KMOREL_CONFIG_DIR/shell-startup/developer-setup.bash"
 
 # If this is not a login shell, we don't need any more setup.
 if shopt -q login_shell
@@ -27,7 +27,7 @@ then :
 else return
 fi
 
-. $KMOREL_CONFIG_DIR/shell-startup/git-completion.bash
+. "$KMOREL_CONFIG_DIR/shell-startup/git-completion.bash"
 
 #############################################################################
 # Set up key bindings.

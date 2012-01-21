@@ -9,10 +9,10 @@ DIR_COLORS=$KMOREL_CONFIG_DIR/shell-startup/DIR_COLORS
 
 if quiet_which dircolors
 then
-    eval `dircolors -b $DIR_COLORS`
+    eval `dircolors -b "$DIR_COLORS"`
 elif quiet_which gdircolors
 then
-    eval `gdircolors -b $DIR_COLORS`
+    eval `gdircolors -b "$DIR_COLORS"`
 else
     LS_OPT="-F"
 fi
