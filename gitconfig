@@ -14,10 +14,12 @@
 [core]
         excludesfile = ~/.gitignore
 [alias]
-	aliases = config --get-regexp ^alias\\.
+        aliases = config --get-regexp ^alias\\.
         pullall = !git pull && git submodule update --init --recursive
         prune-remotes = !git remote | xargs -n 1 git remote prune
         current-branch = !git branch | sed -n 's/^* \\(.*\\)/\\1/p'
         track-named-branch = !sh -c 'git branch --set-upstream $1 $0/$1'
         track = !sh -c 'git track-named-branch $0 $1 `git current-branch`'
         delete-remote-branch = !sh -c 'git push $0 :$1'
+[push]
+        default = upstream
