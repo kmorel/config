@@ -4,5 +4,8 @@
 [include]
         path = gitconfig.base
 
+[alias]
+        track-named-branch = !sh -c 'git branch --set-upstream-to=$0/$1 $1'
+
 [push]
         default = upstream
