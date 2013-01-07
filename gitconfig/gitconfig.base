@@ -1,11 +1,7 @@
 ; -*- ini-generic -*-
 ;
-; To make this your git configuration, make two symbolic links.  Assuming
-; this configure file is located in ~/local/etc/config, these symbolic
-; links are created in your home directory:
-;
-;    ln -s ~/local/etc/config/gitconfig .gitconfig
-;    ln -s ~/local/etc/config/gitignore .gitignore
+; This file contains the most generic git configure.  General configuration
+; goes here.  Configuration specific to new versions goes elsewhere.
 ;
 
 [user]
@@ -22,5 +18,3 @@
         track = !sh -c 'git track-named-branch $0 $1 `git current-branch`'
         track-push = !sh -c 'git push --set-upstream $0 HEAD'
         delete-remote-branch = !sh -c 'git push $0 :$1'
-[push]
-        default = upstream

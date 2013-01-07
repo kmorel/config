@@ -8,37 +8,50 @@ config_dir=$(dirname "$BASH_SOURCE")
 # Absolute path to configure dir
 export KMOREL_CONFIG_DIR=$("${config_dir}/bin/fullpath" "$config_dir")
 
+setup_config_file() {
+    user_file=$1
+    include_line=$2
+
+    # Special case: a link is located here (probably from an old configuration).
+    if [ -L "$user_file" ] ; then
+        echo "#######################################################"
+        echo "Removing link $user_file"
+        rm "$user_file"
+    fi
+
+    if [ -f "$user_file" ] ; then
+        if fgrep "$include_line" "$user_file" > /dev/null ; then
+            :
+        else
+            mv "$user_file" "$user_file.old"
+            echo $include_line > "$user_file"
+            echo >> "$user_file"
+            cat "$user_file.old" >> "$user_file"
+
+            echo "#######################################################"
+            echo "Added the following to $user_file:"
+            echo
+            echo "    $include_line"
+            echo
+            echo "Consider checking the rest of this file to ensure that"
+            echo "the rest of the file is necessary or should not be moved"
+            echo "the tracked configuration."
+            echo
+        fi
+    else
+        echo $include_line > "$user_file"
+
+        echo "#######################################################"
+        echo "Created $user_file"
+        echo
+    fi
+}
+
 setup_login_file() {
     login_file=$1
     config_file=$2
     source_line=". '$config_file'"
-
-    if [ -f "$login_file" ] ; then
-	if fgrep "$source_line" "$login_file" > /dev/null ; then
-	    :
-	else
-	    mv "$login_file" "$login_file.old"
-	    echo $source_line > "$login_file"
-	    echo >> "$login_file"
-	    cat "$login_file.old" >> "$login_file"
-
-	    echo "#######################################################"
-	    echo "Added the following to $login_file:"
-	    echo
-	    echo "    $source_line"
-	    echo
-	    echo "Consider checking the rest of this file to ensure that"
-	    echo "the rest of the file is necessary or should not be moved"
-	    echo "the tracked configuration."
-	    echo
-	fi
-    else
-	echo $source_line > "$login_file"
-
-	echo "#######################################################"
-	echo "Created $login_file"
-	echo
-    fi
+    setup_config_file "$1" "$source_line"
 }
 
 setup_symbolic_link() {
@@ -46,25 +59,33 @@ setup_symbolic_link() {
     source=$2
 
     if [ -f "$target" ] ; then
-	if [ -L "$target" -a "$(readlink '$target')" = "$source" ] ; then
-	    # Link is already correct.
-	    :
-	else
-	    mv "$target" "$target.old"
-	    ln -s "$source" "$target"
+        if [ -L "$target" -a "$(readlink $target)" = "$source" ] ; then
+            # Link is already correct.
+            :
+        else
+            mv "$target" "$target.old"
+            ln -s "$source" "$target"
 
-	    echo "#######################################################"
-	    echo "Moved $target to $target.old"
-	    echo "Replaced it with a symbolic link to $source"
-	    echo
-	fi
+            echo "#######################################################"
+            echo "Moved $target to $target.old"
+            echo "Replaced it with a symbolic link to $source"
+            echo
+        fi
     else
-	ln -s "$source" "$target"
+        # Special case: a dead link is located here (probably from an old
+        # configuration with outdated targerts).
+        if [ -L "$target" ] ; then
+            echo "#######################################################"
+            echo "Removing dead link $target"
+            rm "$target"
+        fi
 
-	echo "#######################################################"
-	echo "Created $target"
-	echo "as a symbolic link to $source"
-	echo
+        ln -s "$source" "$target"
+
+        echo "#######################################################"
+        echo "Created $target"
+        echo "as a symbolic link to $source"
+        echo
     fi
 }
 
@@ -72,5 +93,35 @@ setup_login_file "${HOME}/.bashrc" "${KMOREL_CONFIG_DIR}/bashrc.bash"
 setup_login_file "${HOME}/.zshrc" "${KMOREL_CONFIG_DIR}/zshrc.zsh"
 setup_login_file "${HOME}/.zshenv" "${KMOREL_CONFIG_DIR}/zshenv.zsh"
 
-setup_symbolic_link "${HOME}/.gitconfig" "${KMOREL_CONFIG_DIR}/gitconfig"
-setup_symbolic_link "${HOME}/.gitignore" "${KMOREL_CONFIG_DIR}/gitignore"
+if git_version_string=`git --version`
+then
+    git_version=`echo $git_version_string | sed -n 's/[^0-9]*\([0-9]*\)\.\([0-9]*\).*$/\1.\2/p'`
+    git_version_major=`echo $git_version | sed 's/^\([0-9]*\).*/\1/'`
+    git_version_minor=`echo $git_version | sed 's/^[0-9]*\.\([0-9]*\).*/\1/'`
+else
+    git_version=
+fi
+
+if [ -n "$git_version" ]
+then
+    echo "Installing for git version $git_version"
+    if [ $git_version_major -le 1 -a $git_version_minor -le 7 ] ; then
+        # Git version 1.7 and below does not support the include config.
+        # Get around this by making a symbolic link to the base configuration,
+        # which should be valid for older versions of git.
+        setup_symbolic_link "${HOME}/.gitconfig" "${KMOREL_CONFIG_DIR}/gitconfig/gitconfig.base"
+    else
+        gitconfigfile="${KMOREL_CONFIG_DIR}/gitconfig/gitconfig.$git_version"
+        if [ \! -f "$gitconfigfile" ] ; then
+            echo "**** Configuration file for git version $git_version not found ****"
+            echo "Create new configuration in $gitconfigfile"
+            exit 1
+        fi
+        setup_config_file "${HOME}/.gitconfig" "[include] path = $gitconfigfile"
+    fi
+    setup_symbolic_link "${HOME}/.gitignore" "${KMOREL_CONFIG_DIR}/gitconfig/gitignore"
+else
+    echo "**** Could not get git version!!!!! ****"
+    exit 1
+fi
+
