@@ -21,8 +21,8 @@ unset config_dir
 . "$KMOREL_CONFIG_DIR/shell-startup/ls-setup.bash"
 . "$KMOREL_CONFIG_DIR/shell-startup/developer-setup.bash"
 
-# If this is not a login shell, we don't need any more setup.
-if shopt -q login_shell
+# If this is not an interactive shell, we don't need any more setup.
+if [ -n "$PS1" ]
 then :
 else return
 fi
