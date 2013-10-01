@@ -8,7 +8,7 @@ export PAGER=less
 
 umask 022
 
-export LESS="-i -M"
+export LESS="-i -M -R"
 
 export CVS_RSH=/usr/bin/ssh
 
