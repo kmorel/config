@@ -1,0 +1,71 @@
+#!/bin/sh
+
+if [ "$1" = "-makescripthere" ] ; then
+    bindir="$2"
+    srcdir="$3"
+    make="$4"
+    # Strip off leading . for relative directory.
+    relativedir=`echo $srcdir | sed -e s@\\./@@ -e s/^.\$//`
+    if [ -f "$srcdir/CMakeCache.txt" ] ; then
+	exit 0
+    fi
+    case "$srcdir" in
+	*/CVS)
+	    exit 0 ;;
+    esac
+    echo "  $relativedir"
+    cat > $srcdir/makeme <<EOF
+#!/bin/sh
+echo "*******************************************************"
+echo "*** Building in $bindir/$relativedir"
+echo "*******************************************************"
+if [ "\$1" = "fast" ] ; then
+    shift
+    cd $bindir
+EOF
+    for dir in $bindir/$srcdir/CMakeFiles/*.dir ; do
+	echo "    $make `basename $dir .dir`/fast \"\$@\"" >> $srcdir/makeme
+    done
+    cat >> $srcdir/makeme <<EOF
+else
+    cd $bindir/$relativedir
+    $make "\$@"
+fi
+EOF
+    chmod 755 $srcdir/makeme
+    for dir in $srcdir/* ; do
+	if [ -d "$dir" ] ; then
+	    $0 -makescripthere "$bindir" "$dir" "$make"
+	fi
+    done
+    exit 0
+fi
+
+if [ -z "$1" ] ; then
+    echo "USAGE: $0 <srcdir> [<bindir>]"
+    exit 1
+fi
+
+srcdir=$1
+
+if [ -z "$2" ] ; then
+    bindir=`pwd`
+else
+    # Is there an easier way to get a full path?
+    cwd=`pwd`
+    cd $2
+    bindir=`pwd`
+    cd $cwd
+fi
+
+if [ ! -f $bindir/CMakeCache.txt ] ; then
+    echo "Could not find CMakeCache.txt in $bindir."
+    return 1
+fi
+
+make=`cat $bindir/CMakeCache.txt | sed -n '/CMAKE_MAKE_PROGRAM:/s/^.*=//p'`
+make="time $make"
+
+echo "Adding makeme files point to $bindir..."
+cd $srcdir
+$0 -makescripthere $bindir . "$make"

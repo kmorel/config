@@ -89,6 +89,12 @@ setup_symbolic_link() {
     fi
 }
 
+mkdir -p "${HOME}/local/bin"
+for binfile in "${KMOREL_CONFIG_DIR}/bin/"* ; do
+    targetfile="${HOME}/local/bin/"`basename "$binfile"`
+    setup_symbolic_link "$targetfile" "$binfile"
+done
+
 setup_login_file "${HOME}/.bashrc" "${KMOREL_CONFIG_DIR}/bashrc.bash"
 setup_login_file "${HOME}/.zshrc" "${KMOREL_CONFIG_DIR}/zshrc.zsh"
 setup_login_file "${HOME}/.zshenv" "${KMOREL_CONFIG_DIR}/zshenv.zsh"
