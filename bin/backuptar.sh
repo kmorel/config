@@ -8,40 +8,43 @@ exclusion_args=`cat $HOME/.backups/exclusions | sed -e /^#/d -e '/^$/d' -e 's/^/
 
 file_list_file=/tmp/file_list
 
-for target in $targets ; do
-    echo "Finding files in $target"
-    rm -f $file_list_file
-    eval /usr/bin/find $target -type f $exclusion_args > $file_list_file
-    for subtarget in $targets/* ; do
-	if [ -d "$subtarget" ] ; then
-	    echo "Packaging files in $subtarget"
-	    backupfile="$backupfile_prefix`echo $subtarget | tr / _`.tar"
+backup_subtarget() {
+    target=$1
+    subtarget=$2
+    other_find_args=$3
 
-	    # Figure out which files are _not_ going in this archive.
-	    grep -v ^$subtarget $file_list_file > $file_list_file.pass
-
-	    # Make the archive.
-	    cd $subtarget
-	    grep ^$subtarget $file_list_file | sed -e "s|^$subtarget/|\"|" -e 's/$/"/' | xargs -n 1000 tar rf $backupfile
-	    if [ -f $backupfile ] ; then
-		bzip2 $backupfile
-	    fi
-
-	    # From now on only consider unarchived files.
-	    rm -f $file_list_file
-	    mv $file_list_file.pass $file_list_file
+    cd "$target"
+    if [ -d "$subtarget" ] ; then
+        echo "Packaging files in $target/$subtarget"
+	subtarget_name=`echo $subtarget | tr / _`
+	if [ "$subtarget" = "." ] ; then
+	    subtarget_name=`echo $target | tr / _`
 	fi
-    done
-    echo "Packaging remaining files in $target"
-    backupfile="$backupfile_prefix`echo $target | tr / _`.tar"
+        backupfile=$backupfile_prefix$subtarget_name.tar.bzip2
+	file_list_file=/tmp/file_list_$subtarget_name
 
-    cd $target
-    grep ^$target $file_list_file | sed -e "s|^$target/|\"|" -e 's/$/"/' | xargs tar rf $backupfile
-    if [ -f $backupfile ] ; then
-	bzip2 $backupfile
+	echo "  finding files, removing exclusions"
+	rm -f $file_list_file
+	eval /usr/bin/find "$target/$subtarget" -type f $exclusion_args $other_find_args | sed "s|^$target/||" > $file_list_file
+
+	if [ -s $file_list_file ] ; then
+	    echo "  archiving to $backupfile"
+	    tar cf $backupfile --bzip2 -T $file_list_file
+	else
+	    echo "  no files, skipping"
+	fi
+
+	rm -f $file_list_file
     fi
+}
 
-    rm $file_list_file
+for target in $targets ; do
+    cd "$target"
+    for subtarget in * ; do
+    	backup_subtarget "$target" "$subtarget"
+    done
+
+    backup_subtarget "$target" . "-maxdepth 1"
 done
 
 exit
