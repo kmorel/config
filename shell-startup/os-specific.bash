@@ -34,4 +34,7 @@ case `uname` in
 	alias emacsclient='/Applications/MacPorts/Emacs.app/Contents/MacOS/bin/emacsclient'
 	;;
 
+    CYGWIN*)
+	alias open='cmd /c start'
+
 esac
