@@ -9,6 +9,7 @@
         email = kmorel@sandia.gov
 [core]
         excludesfile = ~/.gitignore
+        autocrlf = input
 [alias]
         aliases = config --get-regexp ^alias\\.
         pullall = !git pull && git submodule update --init --recursive
