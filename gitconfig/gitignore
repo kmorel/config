@@ -3,3 +3,5 @@ out
 CMakeLists.txt.user
 .DS_Store
 *.pyc
+.ipynb_checkpoints
+
