@@ -7,6 +7,8 @@
 case `uname` in
 
     Darwin)
+	stty erase '^H'
+
 	alias ldd='otool -L'
 
         # Disable ReportCrash application
