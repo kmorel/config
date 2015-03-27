@@ -19,3 +19,4 @@
         track = !sh -c 'git track-named-branch $0 $1 `git current-branch`'
         track-push = !sh -c 'git push --set-upstream $0 HEAD'
         delete-remote-branch = !sh -c 'git push $0 :$1'
+        log-branch = log --first-parent
