@@ -14,21 +14,21 @@ if [ "$1" = "-makescripthere" ] ; then
 	    exit 0 ;;
     esac
     echo "  $relativedir"
-    cat > $srcdir/makeme <<EOF
+    cat > "$srcdir/makeme" <<EOF
 #!/bin/sh
 echo "*******************************************************"
 echo "*** Building in $bindir/$relativedir"
 echo "*******************************************************"
 if [ "\$1" = "fast" ] ; then
     shift
-    cd $bindir
+    cd "$bindir"
 EOF
-    for dir in $bindir/$srcdir/CMakeFiles/*.dir ; do
-	echo "    $make `basename $dir .dir`/fast \"\$@\"" >> $srcdir/makeme
+    for dir in "$bindir/$srcdir"/CMakeFiles/*.dir ; do
+	echo "    $make `basename "$dir" .dir`/fast \"\$@\"" >> $srcdir/makeme
     done
-    cat >> $srcdir/makeme <<EOF
+    cat >> "$srcdir/makeme" <<EOF
 else
-    cd $bindir/$relativedir
+    cd "$bindir/$relativedir"
     $make "\$@"
 fi
 EOF
@@ -58,14 +58,14 @@ else
     cd $cwd
 fi
 
-if [ ! -f $bindir/CMakeCache.txt ] ; then
+if [ ! -f "$bindir/CMakeCache.txt" ] ; then
     echo "Could not find CMakeCache.txt in $bindir."
     return 1
 fi
 
-make=`cat $bindir/CMakeCache.txt | sed -n '/CMAKE_MAKE_PROGRAM:/s/^.*=//p'`
+make=`cat "$bindir/CMakeCache.txt" | sed -n '/CMAKE_MAKE_PROGRAM:/s/^.*=//p'`
 make="time $make"
 
 echo "Adding makeme files point to $bindir..."
 cd $srcdir
-$0 -makescripthere $bindir . "$make"
+$0 -makescripthere "$bindir" . "$make"
