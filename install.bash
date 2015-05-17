@@ -117,12 +117,23 @@ then
         # which should be valid for older versions of git.
         setup_symbolic_link "${HOME}/.gitconfig" "${KMOREL_CONFIG_DIR}/gitconfig/gitconfig.base"
     else
+        echo "Looking for config file for git version $git_version"
         gitconfigfile="${KMOREL_CONFIG_DIR}/gitconfig/gitconfig.$git_version"
-        if [ \! -f "$gitconfigfile" ] ; then
-            echo "**** Configuration file for git version $git_version not found ****"
-            echo "Create new configuration in $gitconfigfile"
-            exit 1
-        fi
+        while [ \! -f "$gitconfigfile" ] ; do
+            if [ $git_version_minor -gt 0 ] ; then
+                git_version_minor=`expr $git_version_minor - 1`
+            else
+                # It is pretty iffy to try to find the highest minor revision
+                # of the next lower major revision. Just try 10 on down. This
+                # might need changing later.
+                git_version_minor=10
+                git_version_major=`expr $git_version_major - 1`
+            fi
+            git_version=$git_version_major.$git_version_minor
+            echo "... Trying for version $git_version"
+            gitconfigfile="${KMOREL_CONFIG_DIR}/gitconfig/gitconfig.$git_version"
+        done
+        echo "Using git config file $gitconfigfile"
         setup_config_file "${HOME}/.gitconfig" "[include] path = $gitconfigfile"
     fi
     setup_symbolic_link "${HOME}/.gitignore" "${KMOREL_CONFIG_DIR}/gitconfig/gitignore"
