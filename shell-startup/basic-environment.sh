@@ -20,3 +20,5 @@ fi
 quiet_which() {
     which "$@" > /dev/null 2> /dev/null
 }
+
+export LATEX_DEFAULT_BUILD=dvi
