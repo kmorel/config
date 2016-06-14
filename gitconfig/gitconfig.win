@@ -1,0 +1,6 @@
+; -*- ini-generic -*-
+;
+
+[core]
+        autocrlf = true
+

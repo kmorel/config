@@ -11,6 +11,8 @@ export KMOREL_CONFIG_DIR=$("${config_dir}/bin/fullpath" "$config_dir")
 setup_config_file() {
     user_file=$1
     include_line=$2
+    shift 2
+    other_lines="$@"
 
     # Special case: a link is located here (probably from an old configuration).
     if [ -L "$user_file" ] ; then
@@ -25,6 +27,9 @@ setup_config_file() {
         else
             mv "$user_file" "$user_file.old"
             echo $include_line > "$user_file"
+            for line in "$other_lines" ; do
+                echo $line >> "$user_file"
+            done
             echo >> "$user_file"
             cat "$user_file.old" >> "$user_file"
 
@@ -40,6 +45,9 @@ setup_config_file() {
         fi
     else
         echo $include_line > "$user_file"
+        for line in "$other_lines" ; do
+            echo $line >> "$user_file"
+        done
 
         echo "#######################################################"
         echo "Created $user_file"
@@ -134,6 +142,10 @@ then
             gitconfigfile="${KMOREL_CONFIG_DIR}/gitconfig/gitconfig.$git_version"
         done
         echo "Using git config file $gitconfigfile"
+        case `uname` in
+            CYGWIN*) setup_config_file "${HOME}/.gitconfig" "[include] path = $gitconfigfile" "[include] path = ${KMOREL_CONFIG_DIR}/gitconfig/gitconfig.win" ;;
+            *) setup_config_file "${HOME}/.gitconfig" "[include] path = $gitconfigfile" ;;
+        esac
         setup_config_file "${HOME}/.gitconfig" "[include] path = $gitconfigfile"
     fi
     setup_symbolic_link "${HOME}/.gitignore" "${KMOREL_CONFIG_DIR}/gitconfig/gitignore"
