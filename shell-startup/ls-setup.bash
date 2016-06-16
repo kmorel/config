@@ -2,7 +2,7 @@
 
 # Sets up ls and aliases.  This script can be sourced by bash and zsh.
 
-LS_OPT="--color=auto -F"
+LS_OPT="-F -I 'NTUSER.DAT{*'"
 
 # Set up ls colors.
 DIR_COLORS=$KMOREL_CONFIG_DIR/shell-startup/DIR_COLORS
@@ -10,11 +10,13 @@ DIR_COLORS=$KMOREL_CONFIG_DIR/shell-startup/DIR_COLORS
 if quiet_which dircolors
 then
     eval `dircolors -b "$DIR_COLORS"`
+    LS_OPT="$LS_OPT --color=auto"
 elif quiet_which gdircolors
 then
     eval `gdircolors -b "$DIR_COLORS"`
+    LS_OPT="$LS_OPT --color=auto"
 else
-    LS_OPT="-F"
+    :
 fi
 
 if quiet_which gls
