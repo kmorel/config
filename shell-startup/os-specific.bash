@@ -39,4 +39,8 @@ case `uname` in
     CYGWIN*)
 	alias open='cmd /c start'
 
+	# Use emacsclient on Mac instead of gnuclient
+	alias e='emacsclient --create-frame --no-wait'
+	;;
+
 esac
