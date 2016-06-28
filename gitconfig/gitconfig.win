@@ -3,4 +3,5 @@
 
 [core]
         autocrlf = true
+        filemode = false
 
