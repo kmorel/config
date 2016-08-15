@@ -14,16 +14,26 @@ setup_config_file() {
     shift 2
     other_lines="$@"
 
-    # Special case: a link is located here (probably from an old configuration).
+    # Special case: a link is located here
     if [ -L "$user_file" ] ; then
-        echo "#######################################################"
-        echo "Removing link $user_file"
-        rm "$user_file"
+        if [ -f "$user_file.ext" ] ; then
+	    # NERSC (and perhaps other facilities) have symlinks to system
+	    # shell configuration files that then source a .ext file for
+	    # custom configuration. In this case, edit the .ext file instead.
+	    setup_config_file "$user_file.ext" "$include_line"
+	    return
+	else
+            echo "#######################################################"
+            echo "Moving link $user_file"
+            mv "$user_file" "$user_file.oldlink"
+	fi
     fi
 
     if [ -f "$user_file" ] ; then
         if fgrep "$include_line" "$user_file" > /dev/null ; then
-            :
+            echo "#######################################################"
+            echo "Ignoring file $user_file"
+            echo "(Already configured)"
         else
             mv "$user_file" "$user_file.old"
             echo $include_line > "$user_file"
@@ -69,7 +79,9 @@ setup_symbolic_link() {
     if [ -f "$target" ] ; then
         if [ -L "$target" -a "$(readlink $target)" = "$source" ] ; then
             # Link is already correct.
-            :
+            echo "#######################################################"
+            echo "Ignoring link $target"
+            echo "(Already configured)"
         else
             mv "$target" "$target.old"
             ln -s "$source" "$target"
