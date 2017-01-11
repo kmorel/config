@@ -25,7 +25,7 @@ backup_subtarget() {
 
 	echo "  finding files, removing exclusions"
 	rm -f $file_list_file
-	eval /usr/bin/find \'$target/$subtarget\' -type f $exclusion_args $other_find_args | sed "s|^$target/||" > $file_list_file
+	eval /usr/bin/find \'$target/$subtarget\' $other_find_args -type f $exclusion_args | sed "s|^$target/||" > $file_list_file
 
 	if [ -s $file_list_file ] ; then
 	    echo "  estimating file size"
