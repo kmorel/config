@@ -49,3 +49,7 @@ function display_image_failure() {
         display $file &
     done
 }
+
+# I want to strangle the person who decided to output the results of
+# 'module avail' to standard error. WTF?
+alias moduleavail='module avail 2>&1 | less'

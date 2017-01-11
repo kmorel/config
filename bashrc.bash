@@ -48,5 +48,3 @@ PS1='\h:\[$bold$red\]\w\[$reset\]$(__git_ps1 ",\[$cyan\]%s\[$reset\]") $?> '
 
 alias where='which'
 
-alias moduleavail='module avail 2>&1 | less'
-
