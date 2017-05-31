@@ -43,6 +43,45 @@ function cmakemod() {
     cmake --help-module "$@" | less
 }
 
+# Check the formatting of a given file
+function check-format() {
+    if [ $# -ne 1 ]
+    then
+	echo "USAGE: $0 <filename>"
+	return 1
+    fi
+    if clang-format -style=file $1 | diff $1 - > /dev/null
+    then
+	echo Correct formatting for $1
+	return 0
+    else
+	echo BAD FORMATTING for $1
+	echo Use try-reformat to see what needs to be reformatted
+	echo or use do-reformat to apply reformatting.
+	return 1
+    fi
+}
+
+# See what would happen if you reformatted a file with clang-format
+function try-reformat() {
+    if [ $# -ne 1 ]
+    then
+	echo "USAGE: $0 <filename>"
+	return 1
+    fi
+    clang-format -style=file $1 | diff $1 - | less
+}
+
+# Reformat the given file overwriting the data
+function do-reformat() {
+    if [ $# -ne 1 ]
+    then
+	echo "USAGE: $0 <filename>"
+	return 1
+    fi
+    clang-format -style=file -i $1
+}
+
 # Allows you to pop up several images with ImageMag
 function display_image_failure() {
     for file ; do
