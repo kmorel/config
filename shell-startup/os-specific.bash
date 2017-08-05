@@ -7,7 +7,7 @@
 case `uname` in
 
     Darwin)
-	stty erase '^H'
+	stty erase '^?'
 
 	alias ldd='otool -L'
 
