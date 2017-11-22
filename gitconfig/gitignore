@@ -1,7 +1,6 @@
 makeme
 out
-CMakeLists.txt.user
-CMakeLists.txt.user.2.7pre1
+CMakeLists.txt.user*
 .DS_Store
 *.pyc
 .ipynb_checkpoints
