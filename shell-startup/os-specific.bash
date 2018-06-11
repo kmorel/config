@@ -41,6 +41,12 @@ case `uname` in
 
 	# Use emacsclient on Mac instead of gnuclient
 	alias e='emacsclient --create-frame --no-wait'
+
+	# Start something in a command prompt window. Responds to breaks better
+	alias cmdwindow='cmd /c start cmd /c'
+
+	# Start Jekyll server in the current directory
+	alias jekyll-serve='cmdwindow bundle exec jekyll serve'
 	;;
 
 esac
