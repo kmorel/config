@@ -2,7 +2,20 @@
 
 # Sets up ls and aliases.  This script can be sourced by bash and zsh.
 
-LS_OPT="-F -I 'NTUSER.DAT{*'"
+if quiet_which gls
+then
+    ls_command=gls
+else
+    ls_command=ls
+fi
+
+LS_OPT="-F"
+
+# Set up files to ignore if supported
+if $ls_command -I ignore-this > /dev/null 2> /dev/null
+then
+    LS_OPT="$LS_OPT -I 'NTUSER.DAT{*'"
+fi
 
 # Set up ls colors.
 DIR_COLORS=$KMOREL_CONFIG_DIR/shell-startup/DIR_COLORS
@@ -17,13 +30,6 @@ then
     LS_OPT="$LS_OPT --color=auto"
 else
     :
-fi
-
-if quiet_which gls
-then
-    ls_command=gls
-else
-    ls_command=ls
 fi
 
 alias ls="$ls_command $LS_OPT"
