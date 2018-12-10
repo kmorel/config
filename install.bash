@@ -160,7 +160,14 @@ then
         esac
         setup_config_file "${HOME}/.gitconfig" "[include] path = $gitconfigfile"
     fi
+
+    # Set up global .gitignore file
     setup_symbolic_link "${HOME}/.gitignore" "${KMOREL_CONFIG_DIR}/gitconfig/gitignore"
+
+    # Also set up ~/.gitignore_global as a gitignore file. We use ~/.gitignore,
+    # but .gitignore_global is also common and local config might overwrite
+    # our name. It is easiest just to support both.
+    setup_symbolic_link "${HOME}/.gitignore_global" "${KMOREL_CONFIG_DIR}/gitconfig/gitignore"
 else
     echo "**** Could not get git version!!!!! ****"
     exit 1
