@@ -52,6 +52,13 @@ case `uname` in
 
 	# Start Jekyll server in the current directory
 	alias jekyll-serve='cmdwindow bundle exec jekyll serve'
+
+	# On Cygwin, the DISPLAY defaults to :0 or :0.0. That work fine
+	# for local connections but seems to fail when forwarding X over
+	# ssh. Changing DISPLAY to localhost:0 or localhost:0.0 works.
+	if echo $DISPLAY | grep '^:' > /dev/null; then
+	    export DISPLAY=localhost$DISPLAY
+	fi
 	;;
 
 esac
