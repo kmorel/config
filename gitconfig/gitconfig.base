@@ -21,4 +21,4 @@
         delete-remote-branch = !sh -c 'git push $0 :$1'
         log-branch = log --first-parent
         pull-master = fetch origin master:master
-
+        touch = !sh -c 'git commit --amend --no-edit --date \"`date`\"'
