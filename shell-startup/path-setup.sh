@@ -45,8 +45,13 @@ add_after_system_path() {
     update_path
 }
 
+# Add custom command in home directory first
 add_before_system_path \
-    $HOME/local/bin \
+    $HOME/local/bin
+
+# /usr/local/bin should be in our path, but add it just in case it is not.
+# Add it after the system path so that it does not overwrite custom path.
+add_after_system_path \
     /usr/local/bin
 
 # Make sure X programs are in path.
