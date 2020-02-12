@@ -21,4 +21,11 @@ quiet_which() {
     which "$@" > /dev/null 2> /dev/null
 }
 
+# These are read by some editors (such as emacs) to set the default encoding
+# for unicode text files. You'd think that they would default to UTF-8, but
+# not always.
+LANG=en_US.UTF-8
+LANGUAGE=en_US.UTF-8
+LC_ALL=en_US.UTF-8
+
 export LATEX_DEFAULT_BUILD=dvi
