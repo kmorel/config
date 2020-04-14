@@ -56,7 +56,14 @@ fi
 for tex_file in `git ls-files \*.tex` ; do
     echo -n "$tex_file..."
     # Get old version of file
-    git show $commit:$tex_file > $tex_file-old
+    if git cat-file -e $commit:$tex_file >& /dev/null ; then
+	git cat-file blob $commit:$tex_file > $tex_file-old
+    else
+	# If the new file has a preamble, then the new one has to have
+	# one, too. Pull enough to "generate" one.
+	grep '\(\\documentclass\)\|\(\\begin{document}\)\|\(\\end{document}\)' \
+	     $tex_file > $tex_file-old
+    fi
     # Move new version of file
     mv $tex_file $tex_file-new
     # Do the diff
