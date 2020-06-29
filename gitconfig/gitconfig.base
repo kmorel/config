@@ -10,6 +10,8 @@
 [core]
         excludesfile = ~/.gitignore
         autocrlf = input
+[pull]
+        ff = only
 [alias]
         aliases = config --get-regexp ^alias\\.
         pullall = !git pull && git submodule update --init --recursive
