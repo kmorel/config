@@ -5,3 +5,4 @@ CMakeLists.txt.user*
 *.pyc
 .ipynb_checkpoints
 *.bib.sav
+*.bib.bak
