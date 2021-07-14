@@ -6,7 +6,7 @@
 
 [user]
         name = Kenneth Moreland
-        email = kmorel@sandia.gov
+        email = morelandkd@ornl.gov
 [core]
         excludesfile = ~/.gitignore
         autocrlf = input
