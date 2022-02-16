@@ -25,3 +25,6 @@
         log-branch = log --first-parent
         pull-master = fetch origin master:master
         touch = !sh -c 'git commit --amend --no-edit --date \"`date`\"'
+[init]
+        defaultBranch = main
+
