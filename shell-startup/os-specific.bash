@@ -32,8 +32,8 @@ case `uname` in
 	export BROWSER=open
 
 	# Use emacsclient on Mac instead of gnuclient
-	alias e='/Applications/MacPorts/Emacs.app/Contents/MacOS/bin/emacsclient --create-frame --no-wait'
-	alias emacsclient='/Applications/MacPorts/Emacs.app/Contents/MacOS/bin/emacsclient'
+	#alias emacsclient='/Applications/MacPorts/Emacs.app/Contents/MacOS/bin/emacsclient'
+	alias e='emacsclient --create-frame --no-wait'
 
 	# Aliases to enable/disable capturing the drop shadow of windows in
 	# screen captures
