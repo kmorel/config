@@ -28,7 +28,8 @@ EOF
     done
     cat >> "$srcdir/makeme" <<EOF
 else
-    cd "$bindir/$relativedir"
+    #cd "$bindir/$relativedir"
+    cd "$bindir"
     $make "\$@"
 fi
 EOF
