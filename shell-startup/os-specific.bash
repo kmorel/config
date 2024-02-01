@@ -20,7 +20,7 @@ case `uname` in
 	add_before_system_path \
 	    /opt/local/bin \
 	    /opt/local/sbin
-	export MANPATH=/opt/local/share/man:`man -w`
+	export MANPATH=/opt/local/share/man:$MANPATH
         # sudo to root, establish http proxy, and run port command.
 	alias sudoport='sudo env http_proxy=$http_proxy port'
 
