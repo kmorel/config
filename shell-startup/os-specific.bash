@@ -17,10 +17,15 @@ case `uname` in
 	    >& /dev/null
 
 	# Macports setup
-	add_before_system_path \
-	    /opt/local/bin \
-	    /opt/local/sbin
-	export MANPATH=/opt/local/share/man:$MANPATH
+	#add_before_system_path \
+	#    /opt/local/bin \
+	#    /opt/local/sbin
+	#export MANPATH=/opt/local/share/man:$MANPATH
+
+	# Homebrew setup
+	add_before_system_path /opt/homebrew/bin
+	export MANPATH=/opt/homebrew/share/man
+
         # sudo to root, establish http proxy, and run port command.
 	alias sudoport='sudo env http_proxy=$http_proxy port'
 
