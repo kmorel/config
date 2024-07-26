@@ -92,3 +92,6 @@ function display_image_failure() {
 # I want to strangle the person who decided to output the results of
 # 'module avail' to standard error. WTF?
 alias moduleavail='module avail 2>&1 | less'
+
+# ORNL requires a proxy to open an ssh connection to an external system.
+alias esh='ssh -o ProxyCommand="nc -X connect -x snowman.ornl.gov:3128 %h %p"'
