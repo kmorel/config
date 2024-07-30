@@ -36,10 +36,6 @@ case `uname` in
 	# Trick using file associations to open web pages.
 	export BROWSER=open
 
-	# Use emacsclient on Mac instead of gnuclient
-	#alias emacsclient='/Applications/MacPorts/Emacs.app/Contents/MacOS/bin/emacsclient'
-	alias e='emacsclient --create-frame --no-wait'
-
 	# Aliases to enable/disable capturing the drop shadow of windows in
 	# screen captures
 	alias screencapture-disable-shadow='defaults write com.apple.screencapture disable-shadow -bool true && killall SystemUIServer'
@@ -48,9 +44,6 @@ case `uname` in
 
     CYGWIN*)
 	alias open='cmd /c start'
-
-	# Use emacsclient on Mac instead of gnuclient
-	alias e='emacsclient --create-frame --no-wait'
 
 	# Start something in a command prompt window. Responds to breaks better
 	alias cmdwindow='cmd /c start cmd /c'

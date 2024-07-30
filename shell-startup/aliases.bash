@@ -24,7 +24,11 @@ function svnstat() {
     $SHELL -c 'svn status "$@"' | grep -v '[ /\\]makeme'
 }
 
-alias e='gnuclient -q'
+if which gnuclient > /dev/null ; then
+    alias e='gnuclient -q'
+else
+    alias e='emacsclient --create-frame --no-wait'
+fi
 
 function xt() {
     xterm "$@" -sb -sl 2048 -rv -rw -geometry 100x50 -T xterm@`hostname` -e $SHELL &
@@ -95,3 +99,5 @@ alias moduleavail='module avail 2>&1 | less'
 
 # ORNL requires a proxy to open an ssh connection to an external system.
 alias esh='ssh -o ProxyCommand="nc -X connect -x snowman.ornl.gov:3128 %h %p"'
+alias ecp='scp -o ProxyCommand="nc -X connect -x snowman.ornl.gov:3128 %h %p"'
+alias eftp='sftp -o ProxyCommand="nc -X connect -x snowman.ornl.gov:3128 %h %p"'
