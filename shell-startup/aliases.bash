@@ -24,7 +24,7 @@ function svnstat() {
     $SHELL -c 'svn status "$@"' | grep -v '[ /\\]makeme'
 }
 
-if which gnuclient > /dev/null ; then
+if which gnuclient > /dev/null 2>&1 ; then
     alias e='gnuclient -q'
 else
     alias e='emacsclient --create-frame --no-wait'
