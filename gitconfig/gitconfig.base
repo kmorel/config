@@ -26,6 +26,7 @@
         pull-master = fetch origin master:master
         pull-main = fetch origin main:main
         touch = !sh -c 'git commit --amend --no-edit --date \"`date`\"'
+        github-pr = !bash -c 'git fetch ${1:-origin} pull/$0/head && git checkout FETCH_HEAD'
 [init]
         defaultBranch = main
 
