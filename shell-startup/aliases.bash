@@ -98,6 +98,6 @@ function display_image_failure() {
 alias moduleavail='module avail 2>&1 | less'
 
 # ORNL requires a proxy to open an ssh connection to an external system.
-alias esh='ssh -o ProxyCommand="nc -X connect -x snowman.ornl.gov:3128 %h %p"'
-alias ecp='scp -o ProxyCommand="nc -X connect -x snowman.ornl.gov:3128 %h %p"'
-alias eftp='sftp -o ProxyCommand="nc -X connect -x snowman.ornl.gov:3128 %h %p"'
+alias esh='ssh -o ServerAliveInterval=60 -o ProxyCommand="nc -X connect -x snowman.ornl.gov:3128 %h %p"'
+alias ecp='scp -o ServerAliveInterval=60 -o ProxyCommand="nc -X connect -x snowman.ornl.gov:3128 %h %p"'
+alias eftp='sftp -o ServerAliveInterval=60 -o ProxyCommand="nc -X connect -x snowman.ornl.gov:3128 %h %p"'
