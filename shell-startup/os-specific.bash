@@ -23,8 +23,7 @@ case `uname` in
 	#export MANPATH=/opt/local/share/man:$MANPATH
 
 	# Homebrew setup
-	add_before_system_path /opt/homebrew/bin
-	export MANPATH=/opt/homebrew/share/man
+	eval "$(/opt/homebrew/bin/brew shellenv)"
 
         # sudo to root, establish http proxy, and run port command.
 	alias sudoport='sudo env http_proxy=$http_proxy port'
