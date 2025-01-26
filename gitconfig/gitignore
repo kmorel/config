@@ -9,3 +9,4 @@ CMakeLists.txt.user*
 *.bib.bak
 .vscode
 CMakeUserPresets.json
+.hugo_build.lock
