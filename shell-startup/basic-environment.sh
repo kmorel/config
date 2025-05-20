@@ -36,4 +36,4 @@ export LANG=C
 export LANGUAGE=C
 export LC_ALL=C
 
-export LATEX_DEFAULT_BUILD=dvi
+#export LATEX_DEFAULT_BUILD=dvi
