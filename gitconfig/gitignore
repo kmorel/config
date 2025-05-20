@@ -1,5 +1,6 @@
 makeme
 out
+build
 CMakeLists.txt.user*
 .DS_Store
 *.pyc
@@ -10,3 +11,4 @@ CMakeLists.txt.user*
 .vscode
 CMakeUserPresets.json
 .hugo_build.lock
+.ExternalData
