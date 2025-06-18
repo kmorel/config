@@ -23,6 +23,7 @@
         track-push = !sh -c 'git push --set-upstream $0 HEAD'
         delete-remote-branch = !sh -c 'git push $0 :$1'
         log-branch = log --first-parent
+        pull-branch = !bash -c 'git fetch ${1:-origin} $0:$0 || echo USAGE git pull-branch \\<branch\\> \\[\\<repo\\>\\]'
         pull-master = fetch origin master:master
         pull-main = fetch origin main:main
         touch = !sh -c 'git commit --amend --no-edit --date \"`date`\"'
