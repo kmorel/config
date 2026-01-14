@@ -27,7 +27,8 @@
         pull-master = fetch origin master:master
         pull-main = fetch origin main:main
         touch = !sh -c 'git commit --amend --no-edit --date \"`date`\"'
-        github-pr = !bash -c 'git fetch ${1:-origin} pull/$0/head && git checkout FETCH_HEAD'
+        github-pr = !bash -c 'git fetch ${1:-origin} pull/$0/head && git checkout FETCH_HEAD || echo USAGE git github-pr \\<pr-id\\> \\[\\<repo\\>\\]'
+        gitlab-mr = !bash -c 'git fetch ${1:-origin} refs/merge-requests/$0/head && git checkout FETCH_HEAD || echo USAGE git github-mr \\<mr-id\\> \\[\\<repo\\>\\]'
 [init]
         defaultBranch = main
 
