@@ -34,4 +34,4 @@ fi
 
 alias ls="$ls_command $LS_OPT"
 alias la="$ls_command -a $LS_OPT"
-alias ll="$ls_command -al $LS_OPT"
+alias ll="$ls_command -alh $LS_OPT"
