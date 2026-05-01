@@ -4,6 +4,6 @@
 [include]
         path = gitconfig.1.8
 
-[pager]
-        branch = false
+; [pager]
+;         branch = false
 
