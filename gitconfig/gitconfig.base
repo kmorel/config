@@ -29,6 +29,7 @@
         touch = !sh -c 'git commit --amend --no-edit --date \"`date`\"'
         github-pr = !bash -c 'git fetch ${1:-origin} pull/$0/head && git checkout FETCH_HEAD || echo USAGE git github-pr \\<pr-id\\> \\[\\<repo\\>\\]'
         gitlab-mr = !bash -c 'git fetch ${1:-origin} refs/merge-requests/$0/head && git checkout FETCH_HEAD || echo USAGE git github-mr \\<mr-id\\> \\[\\<repo\\>\\]'
+        viskores-force-frank-success = !bash -c 'gh api -X POST repos/Viskores/viskores/statuses/${0} -f state=success -f context=\"Frank CI\" -f target_url=\"${1}\" -f description=\"GitLab pipeline succeeded after restart\" || echo USAGE git viskores-force-frank-success \\<Full SHA\\> \\<URL to Frank Pipeline\\>'
 [init]
         defaultBranch = main
 
