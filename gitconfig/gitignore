@@ -13,5 +13,6 @@ CMakeUserPresets.json
 .hugo_build.lock
 .ExternalData
 .conda
+.venv
 ~$*
 
